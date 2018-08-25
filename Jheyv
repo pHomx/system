@@ -1,0 +1,308 @@
+package Final;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class MenuPrincipal {
+
+	private static final String Marca = null;
+
+	public static void main(String[] args) {
+
+		Scanner entrada = new Scanner(System.in);
+
+		Map<String, Cliente> clientes = new HashMap<String, Cliente>();
+		Map<String, Carro> carros = new HashMap<String, Carro>();
+		String opcao = "";
+		boolean program = true;
+		String bomPagador = "";
+		
+		while (program) {
+
+			System.out.println("=======================================|");
+			System.out.println("ALUGUEL DE CARROS                      |");
+			System.out.println("1- Cadastro de Cliente                 |");
+			System.out.println("2- Cadastro de Carro                   |");
+			System.out.println("3- Aluguel                             |");
+			System.out.println("4- Relatórios                          |");
+			System.out.println("5- Finalizar o programa                |");
+			System.out.println("=======================================|");
+
+			System.out.println("Escolha uma das opções acima");
+			opcao = entrada.next();
+			System.out.println("");
+			if (!opcao.equals("1") && !opcao.equals("2") && !opcao.equals("3") && !opcao.equals("4")
+					&& !opcao.equals("5")) {
+				{
+					System.out.println("Digite uma opção válida!");
+				}
+			}
+
+			if (opcao.equals("1")) {
+				{
+
+					boolean manterCadastroCliente = true;
+					String opcaoClienteNovo = "";
+					String voltaMenuPrincipal = "";
+
+					System.out.println("Você selecionou a opção \"Cadastro de Cliente\".");
+
+					while (manterCadastroCliente) {
+						while (!opcaoClienteNovo.toUpperCase().equals("SIM")
+								&& !opcaoClienteNovo.toUpperCase().equals("NÃO")) {
+							System.out.println("Novo Cliente? (Sim/Não)");
+							opcaoClienteNovo = entrada.next().toUpperCase();
+						}
+
+						if (opcaoClienteNovo.toUpperCase().equals("SIM")) {
+
+							opcaoClienteNovo = "";
+
+							manterCadastroCliente = true;
+
+							Cliente cliente = new Cliente();
+
+							Endereco endereco = new Endereco();
+
+							TipoEndereco tipoEnd;
+
+							UF uf;
+
+							String ufDigitada = "";
+
+							String tipoEndereco = "";
+
+
+							Integer codigoCliente = clientes.size() + 1;
+
+							cliente.setCodCliente(codigoCliente);
+
+							System.out.println("O código do cliente é: " + codigoCliente + ".");
+
+							System.out.println("Digite o nome do cliente:");
+							cliente.setNome(entrada.next().toUpperCase());
+
+							System.out.println("Digite o telefone do cliente:");
+							cliente.setTelefone(entrada.next().toUpperCase());
+
+							while (!tipoEndereco.toUpperCase().equals("R") && !tipoEndereco.toUpperCase().equals("C")) {
+								System.out.println(
+										"Digite o tipo de endereço do cliente (R - Residencial; C - Comercial):");
+								tipoEndereco = entrada.next();
+							}
+							if (tipoEndereco.toUpperCase().equals("R")) {
+								endereco.setTipoendereco(TipoEndereco.RESIDENCIAL);
+							} else {
+								endereco.setTipoendereco(TipoEndereco.COMERCIAL);
+							}
+
+							System.out.println("Digite o CEP do cliente:");
+							endereco.setCep(entrada.next().toUpperCase());
+
+							System.out.println("Digite o bairro do cliente:");
+							endereco.setBairro(entrada.next().toUpperCase());
+
+							System.out.println("Digite a cidade do cliente:");
+							endereco.setCidade(entrada.next().toUpperCase());
+
+							while (!ufDigitada.toUpperCase().equals("RJ") && !ufDigitada.toUpperCase().equals("SP")
+									&& !ufDigitada.toUpperCase().equals("MG") && !ufDigitada.toUpperCase().equals("BH")
+									&& !ufDigitada.toUpperCase().equals("PE")) {
+								System.out.println("Digite a UF do cliente:");
+								ufDigitada = entrada.next().toUpperCase();
+							}
+
+							while (!bomPagador.toUpperCase().equals("SIM") && !bomPagador.toUpperCase().equals("NÃO")) {
+								System.out.println("O cliente é um bom pagador?");
+								bomPagador = entrada.next();
+
+								if (ufDigitada.toUpperCase().equals("RJ")) {
+									endereco.setUF(UF.RJ);
+								} else if (ufDigitada.toUpperCase().equals("SP")) {
+									endereco.setUF(UF.SP);
+								} else if (ufDigitada.toUpperCase().equals("ES"))
+									endereco.setUf(UF.ES);
+
+							}
+
+							if (bomPagador.toUpperCase().equals("SIM")) {
+								cliente.setBomPagador(true);
+								;
+							} else {
+								cliente.setBomPagador(false);
+								;
+							}
+
+							cliente.setEndereco(endereco);
+
+							clientes.put(codigoCliente.toString(), cliente);
+
+						} else if (opcaoClienteNovo.toUpperCase().equals("NÃO")) {
+							manterCadastroCliente = false;
+
+						}
+					}
+
+					while (!voltaMenuPrincipal.toUpperCase().equals("SIM")
+							&& !voltaMenuPrincipal.toUpperCase().equals("NÃO")) {
+						System.out.println("Deseja voltar ao menu principal?");
+						voltaMenuPrincipal = entrada.next();
+						if (voltaMenuPrincipal.toUpperCase().equals("SIM")) {
+
+						} else if (voltaMenuPrincipal.toUpperCase().equals("NÃO")) {
+							System.out.println("Fim de Programa!");
+							program = false;
+						}
+					}
+
+				}
+			} else if (opcao.equals("2")) {
+				{
+					boolean manterCadastroCarro = true;
+					String opcaoCarroNovo = "";
+					String voltaMenuPrincipal = "";
+
+					System.out.println("Você selecionou a opção \"Cadastro de Carro\".");
+
+					while (manterCadastroCarro) {
+						while (!opcaoCarroNovo.toUpperCase().equals("SIM")
+								&& !opcaoCarroNovo.toUpperCase().equals("NÃO")) {
+							System.out.println("Novo Carro? (Sim/Não)");
+							opcaoCarroNovo = entrada.next();
+						}
+
+						if (opcaoCarroNovo.toUpperCase().equals("SIM")) {
+
+							opcaoCarroNovo = "";
+
+							Carro carro = new Carro();
+
+							String Marca = "";
+
+							String estadoCarro = "";
+
+							boolean carroEstaAlugado = true;
+
+							Integer codigoCarro = carros.size() + 1;
+
+							System.out.println("Insira o nome do carro:");
+							carro.setNomeCarro(entrada.next());
+
+							while (carroEstaAlugado) {
+
+								System.out.println("O carro de código " + codigoCarro + "...");
+
+								if (codigoCarro != carro.getCodCarro()) {
+
+									System.out.println(
+											"Não está alugado. Continue a preencher as informações do novo carro:");
+									carroEstaAlugado = false;
+
+								} else if (codigoCarro == carro.getCodCarro()) {
+
+									carroEstaAlugado = true;
+									System.out.println("E nome, " + carro.getNomeCarro() + " já está alugado!");
+									manterCadastroCarro = false;
+
+								}
+							}
+
+							carro.setCodCarro(codigoCarro);
+
+							System.out.println("Insira o valor do carro:");
+							carro.setValor(entrada.nextDouble());
+
+							while (!Marca.toUpperCase().equals("TOYOTA") && !Marca.toUpperCase().equals("HONDA")
+									&& !Marca.toUpperCase().equals("HYUNDAY")) {
+
+								System.out.println("Insira a marca do carro (Toyota, Honda ou Hyunday):");
+								Marca = entrada.next();
+
+							}
+
+							if (Marca.equals("TOYOTA")) {
+								carro.setMarca(Final.Marca.TOYOTA);
+							} else if (Marca.equals("HYUNDAY")) {
+								carro.setMarca(Final.Marca.HYUNDAY);
+							} else if (Marca.equals("Honda")) {
+								carro.setMarca(Final.Marca.HONDA);
+							}
+
+							while (!estadoCarro.toUpperCase().equals("USADO")
+									&& !estadoCarro.toUpperCase().equals("NOVO")) {
+
+								System.out.println("O carro é novo ou usado?");
+								estadoCarro = entrada.next();
+
+							}
+
+							if (estadoCarro.toUpperCase().equals("NOVO")) {
+								carro.setNovoCarro(true);
+							} else if (estadoCarro.toUpperCase().equals("USADO")) {
+								carro.setNovoCarro(false);
+							}
+
+							carros.put(codigoCarro.toString(), carro);
+
+						} else if (opcaoCarroNovo.toUpperCase().equals("NÃO")) {
+							manterCadastroCarro = false;
+						}
+					}
+
+					while (!voltaMenuPrincipal.toUpperCase().equals("SIM")
+							&& !voltaMenuPrincipal.toUpperCase().equals("NÃO")) {
+						System.out.println("Deseja voltar ao menu principal?");
+						voltaMenuPrincipal = entrada.next();
+						if (voltaMenuPrincipal.toUpperCase().equals("SIM")) {
+
+						} else if (voltaMenuPrincipal.toUpperCase().equals("NÃO")) {
+							System.out.println("Fim de Programa!");
+							program = false;
+						}
+					}
+				}
+			} else if (opcao.equals("3")) {
+				{
+
+					String cod = "";
+
+					System.out.println("Você selecionou a opção \"Aluguel\".");
+
+					System.out.println("Digite o código do cliente");
+					cod = entrada.next();
+					
+				
+			
+				
+				
+				}
+			
+			
+			
+			} else if (opcao.equals("4")) {
+				{
+					System.out.println("Você selecionou a opção \"Relatórios\".");
+
+					for (Cliente pp : clientes.values()) {
+						System.out.println("Cliente: " + pp.getNome());
+						System.out.println("");
+					}
+
+					for (Carro ppp : carros.values()) {
+
+						System.out.println("Carros: " + ppp.getNomeCarro());
+						System.out.println("");
+					}
+
+				}
+			} else if (opcao.equals("5")) {
+				System.out.println("Você fechou o programa :( ");
+
+				program = false;
+
+			}
+		}
+	}
+
+}
